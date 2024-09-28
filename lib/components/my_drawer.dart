@@ -30,6 +30,7 @@ class MyDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: ListTile(
+                  onTap: () => Navigator.pop(context),
                   leading: Icon(
                     Icons.home,
                     color: Theme.of(context).colorScheme.primary,
