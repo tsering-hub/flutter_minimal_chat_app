@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_minimal_chat_app/auth/auth_service.dart';
+import 'package:flutter_minimal_chat_app/services/auth/auth_service.dart';
 import 'package:flutter_minimal_chat_app/components/my_button.dart';
 import 'package:flutter_minimal_chat_app/components/my_textfield.dart';
 
@@ -32,77 +32,82 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // logo
-            Icon(
-              Icons.message,
-              size: 60,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            // welcome back message
-            Text(
-              "Welcome Back",
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary, fontSize: 16),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            // email textfield
-            MyTextfield(
-              hintText: 'Email',
-              obscureText: false,
-              controller: _emailController,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // pw textfield
-            MyTextfield(
-              hintText: 'Password',
-              obscureText: true,
-              controller: _pwController,
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            // loign button
-            MyButton(
-              text: 'Login',
-              onTap: () => login(context),
-            ),
-            SizedBox(
-              height: 25,
-            ),
-            // register now
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Not a member? ",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: onTap,
-                  child: Text(
-                    "Register Now",
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 100,
+              ),
+              // logo
+              Icon(
+                Icons.message,
+                size: 60,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              // welcome back message
+              Text(
+                "Welcome Back",
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary, fontSize: 16),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              // email textfield
+              MyTextfield(
+                hintText: 'Email',
+                obscureText: false,
+                controller: _emailController,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // pw textfield
+              MyTextfield(
+                hintText: 'Password',
+                obscureText: true,
+                controller: _pwController,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              // loign button
+              MyButton(
+                text: 'Login',
+                onTap: () => login(context),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              // register now
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Not a member? ",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  GestureDetector(
+                    onTap: onTap,
+                    child: Text(
+                      "Register Now",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
