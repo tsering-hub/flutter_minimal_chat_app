@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_minimal_chat_app/models/message.dart';
 
 class ChatService {
@@ -48,7 +49,7 @@ class ChatService {
   }
 
   // get message
-  Future<void> getMessage(String otherUserID) async {
+  Stream<QuerySnapshot> getMessage(String otherUserID) {
     // get current user info
     final String currentUserID = _auth.currentUser!.uid;
 
@@ -56,8 +57,7 @@ class ChatService {
     ids.sort();
     String chatRoomID = ids.join("_");
 
-    // add new messsge to db
-    await _firestore
+    return _firestore
         .collection("chat_rooms")
         .doc(chatRoomID)
         .collection("messages")
