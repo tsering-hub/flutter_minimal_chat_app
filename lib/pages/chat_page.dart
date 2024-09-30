@@ -4,6 +4,7 @@ import 'package:flutter_minimal_chat_app/components/chat_bubble.dart';
 import 'package:flutter_minimal_chat_app/components/my_textfield.dart';
 import 'package:flutter_minimal_chat_app/services/auth/auth_service.dart';
 import 'package:flutter_minimal_chat_app/services/chat/chat_service.dart';
+import 'package:flutter_minimal_chat_app/services/utils.dart';
 
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
@@ -19,6 +20,8 @@ class _ChatPageState extends State<ChatPage> {
   final ChatService _chatService = ChatService();
 
   final AuthService _authService = AuthService();
+
+  final Utils utils = Utils();
 
   // textController
   final TextEditingController _messageController = TextEditingController();
@@ -99,10 +102,18 @@ class _ChatPageState extends State<ChatPage> {
         stream: _chatService.getMessage(widget.receiverID),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("Error");
+            return Center(child: Text("Error"));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading..");
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Loading.."),
+                ],
+              ),
+            );
           }
 
           return ListView(
@@ -121,10 +132,31 @@ class _ChatPageState extends State<ChatPage> {
 
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    var txtalignment = isCurrentUser ? TextAlign.right : TextAlign.left;
 
     return Container(
       alignment: alignment,
-      child: ChatBubble(message: data["message"], isCurrentUser: isCurrentUser),
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+      child: Column(
+        children: [
+          Container(
+              alignment: alignment,
+              child: ChatBubble(
+                  message: data["message"], isCurrentUser: isCurrentUser)),
+          Container(
+            margin: EdgeInsets.only(top: 2),
+            alignment: alignment,
+            child: Text(
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 12,
+              ),
+              utils.convertTimeStampToString(data["timestamp"]),
+              textAlign: txtalignment,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
